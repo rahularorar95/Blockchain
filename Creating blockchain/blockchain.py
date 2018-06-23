@@ -32,7 +32,7 @@ class Blockchain:
         new_proof=1
         check_proof=False
         while check_proof is False:
-            hash_operation = hashlib.sha256(str(new_proof**2 - previous_proof**2).encode()).hexdigest()
+            hash_operation = hashlib.sha256(str(new_proof**3 - previous_proof**3).encode()).hexdigest()
             if hash_operation[:4] == '0000': # difficulty
                 check_proof=True
             else:
@@ -52,7 +52,7 @@ class Blockchain:
                 return False
             previous_proof = previous_block['proof']
             proof = block['proof']
-            hash_operation = hashlib.sha256(str(proof**2 - previous_proof**2).encode()).hexdigest()
+            hash_operation = hashlib.sha256(str(proof**3 - previous_proof**3).encode()).hexdigest()
             if hash_operation[:4] != '0000':
                 return False
             previous_block = block
@@ -83,6 +83,7 @@ def mine_block():
                 'previous_hash' : block['previous_hash']
                 }
     return jsonify(response),200
+
 
 # Getting Full Blockchain
 @app.route('/get_chain' , methods =['GET'])
